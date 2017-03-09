@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>URL Generator</title>
+<script type="text/javascript" src="lib/jquery-3.1.1.min.js"></script>
+<script type="text/javascript">
+	var loading = false;
+	function showLoading() {
+		if (loading == false) {
+			return;
+		}
+		setTimeout(function() {
+			$("#urlOut").text($("#urlOut").text() + "|");
+			if ($("#urlOut").text().length > 50) {
+				$("#urlOut").text("");
+			}
+			showLoading();
+		}, 50);
+	}
+	function generate() {
+		loading = true;
+		showLoading();
+		$.get("urlgen?url=" + encodeURIComponent($("#urlInput").val())
+				+ "&title=" + $("#titleInput").val(), function(data) {
+			loading = false;
+			setTimeout(function() {
+				$("#urlOut").text(data)
+			}, 50);
+		});
+	}
+</script>
+<style>
+body {
+	padding: 1em;
+}
+
+#urlOut {
+	border: thin solid red;
+	min-height: 1.2em;
+	color: red;
+}
+</style>
+</head>
+<body>
+	<h1>Enter a url</h1>
+	<table>
+		<tr>
+			<th><input type="text" id="urlInput"
+				placeholder="http://example.com"></th>
+			<th><input type="text" id="titleInput"
+				placeholder="Title to display (Optional)"></th>
+		</tr>
+		<tr>
+			<td>
+				<button onclick="generate()">Generate URL</button>
+			</td>
+		</tr>
+	</table>
+	<div id="urlOut"></div>
+</body>
+</html>
