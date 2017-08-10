@@ -8,7 +8,8 @@ CREATE TABLE ip_addresses
 	session_id TEXT,
 	cookie_id TEXT,
 	urlid INT,
-	visited_before VARCHAR(3)
+	visited_before VARCHAR(3),
+	is_mobile TEXT
 );
 
 CREATE TABLE urls
